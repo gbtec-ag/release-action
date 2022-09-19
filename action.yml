@@ -6,6 +6,9 @@ inputs:
   source-branch:
     description: 'Source branche to release'
     required: true
+  token:
+    description: 'Token for repository access'
+    required: true
 
 runs:
   using: "composite"
