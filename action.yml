@@ -14,12 +14,6 @@ runs:
       uses: actions/setup-python@v4.2.0
       with:
         python-version: '3.10'
-  
-    - name: Configure Git
-      run: |
-          git config --global user.name ${GITHUB_USER}
-          git config --global user.email ${GITHUB_EMAIL}
-      shell: bash
 
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3.0.2
@@ -27,7 +21,7 @@ runs:
         repository: gbtec-ag/git-repository-runner
         ref: refs/head/development
         path: git-repository-runner
-        token: $GITHUB_PAT
+        ssh-key: $GH_GBTEC_SYSTEMS_SSH_KEY
 
     - name: Debug
       run: echo "${{ inputs.repository }}/${{ inputs.source-branch }}"
