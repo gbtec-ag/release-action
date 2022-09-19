@@ -20,6 +20,7 @@ runs:
       with: 
         repository: gbtec-ag/git-repository-runner
         ref: refs/head/development
+        token: $GITHUB_PAT
 
     - name: Debug
       run: echo "${{ inputs.repository }}/${{ inputs.source-branch }}"
