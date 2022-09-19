@@ -26,10 +26,12 @@ runs:
         #ref: refs/head/development
         path: git-repository-runner
 
+    - name: Install dependencies
+      run: |
+        cd git-repository-runner
+        pip install -r requirements.txt
+      shell: bash
+
     - name: Debug
       run: echo "${{ inputs.repository }}/${{ inputs.source-branch }}"
       shell: bash
-
-    #- name: Install dependencies
-    #  run: pip install -r requirements.txt
-    #  shell: bash
