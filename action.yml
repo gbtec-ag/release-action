@@ -1,16 +1,20 @@
-name: 'Hello World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+name: "Release project"
+inputs:
+  repository:
+    description: 'Repository to release'
+    required: true
+  source-branch:
+    description: 'Source branche to release'
+    required: true
 
 runs:
   using: "composite"
   steps:
-    - run: echo Hello World!
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-number::$(echo $RANDOM)"
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
+    - name: Install Python
+      uses: actions/setup-python@v4.2.0
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
