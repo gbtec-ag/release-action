@@ -18,7 +18,7 @@ runs:
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3.0.2
       with: 
-        token: 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
+        token: ${{ inputs.token }}
         repository: gbtec-ag/git-repository-runner
         #ref: refs/head/development
         path: git-repository-runner
