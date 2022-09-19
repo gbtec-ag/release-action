@@ -26,6 +26,7 @@ runs:
       with: 
         repository: gbtec-ag/git-repository-runner
         ref: refs/head/development
+        path: git-repository-runner
         token: $GITHUB_PAT
 
     - name: Debug
