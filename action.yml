@@ -18,10 +18,10 @@ runs:
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3.0.2
       with: 
+        token: ${GH_TOKEN}
         repository: gbtec-ag/git-repository-runner
-        ref: refs/head/development
+        #ref: refs/head/development
         path: git-repository-runner
-        ssh-key: $GH_GBTEC_SYSTEMS_SSH_KEY
 
     - name: Debug
       run: echo "${{ inputs.repository }}/${{ inputs.source-branch }}"
