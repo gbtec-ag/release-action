@@ -4,7 +4,7 @@ inputs:
     description: 'Repository to release'
     required: true
   source-branch:
-    description: 'Source branche to release'
+    description: 'Source branch to release'
     required: true
   token:
     description: 'Token for repository access'
@@ -23,7 +23,7 @@ runs:
       with: 
         token: ${{ inputs.token }}
         repository: gbtec-ag/git-repository-runner
-        #ref: refs/head/development
+        ref: refs/heads/feat/DES-2160
         path: git-repository-runner
 
     - name: Install dependencies
@@ -32,6 +32,11 @@ runs:
         pip install -r requirements.txt
       shell: bash
 
-    - name: Debug
-      run: echo "${{ inputs.repository }}/${{ inputs.source-branch }}"
+    - name: Run release workflow
+      run: |
+        mkdir "${GITHUB_WORKSPACE}/workdir"
+        export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}/workdir"
+        export REPO_HELPER_SERVICES="${{ inputs.repository }}"
+        cd "${GITHUB_WORKSPACE}/git-repository-runner"
+        ./runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
