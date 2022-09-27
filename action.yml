@@ -24,7 +24,7 @@ runs:
         token: ${{ inputs.runner-token }}
         repository: gbtec-ag/git-repository-runner
         ref: refs/heads/feat/DES-2160
-        path: git-repository-runner
+        path: ../git-repository-runner
 
     - name: Install dependencies
       run: |
@@ -34,10 +34,10 @@ runs:
 
     - name: Run release workflow
       run: |
-        echo "Workspace: ${GITHUB_WORKSPACE}"
-        export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}/workdir"
+        tempdir=$(basename "${GITHUB_WORKSPACE}")
+        export REPO_HELPER_BASEDIR="${tempdir}/workdir"
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
-        mkdir "${GITHUB_WORKSPACE}/workdir"
-        cd "${GITHUB_WORKSPACE}/git-repository-runner"
+        mkdir "${REPO_HELPER_BASEDIR}"
+        cd "${tempdir}/git-repository-runner"
         ./runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
