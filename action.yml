@@ -6,14 +6,8 @@ inputs:
   source-branch:
     description: 'Source branch to release'
     required: true
-  workspace:
-    description: 'Working directory'
-    required: true
   runner-token:
     description: 'Token for repository git-repository-runner'
-    required: true
-  repo-token:
-    description: 'Token for the repository that is to be released'
     required: true
 
 runs:
@@ -39,12 +33,11 @@ runs:
       shell: bash
 
     - name: Run release workflow
-      env:
-        REPO_TOKEN: ${{ inputs.repo-token }}
-        REPO_HELPER_BASEDIR: ${{ inputs.workspace }}/workdir
-        REPO_HELPER_SERVICES: ${{ inputs.repository }}
       run: |
-        mkdir "${{ inputs.workspace }}/workdir"
-        cd "${{ inputs.workspace }}/git-repository-runner"
+        echo "Workspace: ${GITHUB_WORKSPACE}"
+        export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}/workdir"
+        export REPO_HELPER_SERVICES="${{ inputs.repository }}"
+        mkdir "${GITHUB_WORKSPACE}/workdir"
+        cd "${GITHUB_WORKSPACE}/git-repository-runner"
         ./runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
