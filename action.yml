@@ -37,12 +37,11 @@ runs:
 
     - name: Run release workflow
       env:
-        repo-token: ${{ inputs.repo-token }}
-        runner-token: ${{ inputs.runner-token }}
+        REPO_TOKEN: ${{ inputs.repo-token }}
+        REPO_HELPER_BASEDIR: ${{ env.GITHUB_WORKSPACE }}/workdir
+        REPO_HELPER_SERVICES: ${{ inputs.repository }}
       run: |
         mkdir "${GITHUB_WORKSPACE}/workdir"
-        export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}/workdir"
-        export REPO_HELPER_SERVICES="${{ inputs.repository }}"
         cd "${GITHUB_WORKSPACE}/git-repository-runner"
         ./runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
