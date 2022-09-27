@@ -6,8 +6,11 @@ inputs:
   source-branch:
     description: 'Source branch to release'
     required: true
-  token:
-    description: 'Token for repository access'
+  runner-token:
+    description: 'Token for repository git-repository-runner'
+    required: true
+  repo-token:
+    description: 'Token for the repository that is to be released'
     required: true
 
 runs:
@@ -21,7 +24,7 @@ runs:
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3.0.2
       with: 
-        token: ${{ inputs.token }}
+        token: ${{ inputs.runner-token }}
         repository: gbtec-ag/git-repository-runner
         ref: refs/heads/feat/DES-2160
         path: git-repository-runner
@@ -33,6 +36,9 @@ runs:
       shell: bash
 
     - name: Run release workflow
+      env:
+        repo-token: ${{ inputs.repo-token }}
+        runner-token: ${{ inputs.runner-token }}
       run: |
         mkdir "${GITHUB_WORKSPACE}/workdir"
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}/workdir"
