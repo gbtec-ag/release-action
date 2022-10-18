@@ -9,6 +9,12 @@ inputs:
   runner-token:
     description: 'Token for repository git-repository-runner'
     required: true
+  jira-user:
+    description: 'User to access Jira API'
+    required: true
+  jira-token:
+    description: 'Token to access Jira API'
+    required: true
 
 runs:
   using: "composite"
@@ -36,5 +42,7 @@ runs:
       run: |
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
+        export JIRA_USER="${{ inputs.jira-user }}"
+        export JIRA_TOKEN="${{ inputs.jira-token }}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
