@@ -15,6 +15,9 @@ inputs:
   jira-token:
     description: 'Token to access Jira API'
     required: true
+  slack-token:
+    description: 'Token to access Slack API'
+    required: true
 
 runs:
   using: "composite"
@@ -44,5 +47,7 @@ runs:
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
         export JIRA_USER="${{ inputs.jira-user }}"
         export JIRA_TOKEN="${{ inputs.jira-token }}"
+        export SLACK_TOKEN="${{ inputs.slack-token }}"
+        export TRIGGERING_USER="${{ github.triggering_actor }}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
