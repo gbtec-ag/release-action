@@ -6,8 +6,17 @@ inputs:
   source-branch:
     description: 'Source branch to release'
     required: true
-  runner-token:
-    description: 'Token for repository git-repository-runner'
+  gh-runner-token:
+    description: 'Token to clone GitHub repositories'
+    required: true
+  maven-repository-user:
+    description: 'User to access maven-repository artifacts'
+    required: true
+  maven-repository-token:
+    description: 'Token to access maven-repository artifacts'
+    required: true
+  maven-repository-url:
+    description: 'Url to access maven-repository artifacts'
     required: true
   jira-user:
     description: 'User to access Jira API'
@@ -30,7 +39,7 @@ runs:
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3.0.2
       with: 
-        token: ${{ inputs.runner-token }}
+        token: ${{ inputs.gh-runner-token }}
         repository: gbtec-ag/git-repository-runner
         ref: refs/heads/feat/DES-2160
         path: git-repository-runner
@@ -41,12 +50,29 @@ runs:
         pip install -r requirements.txt
       shell: bash
 
+    - name: Create Maven settings
+      uses: whelk-io/maven-settings-xml-action@v21
+      with:
+        # We need the indirection of the environment vars so that the credentials never get written to settings.xml on harddisk.
+        servers: '[{ "id": "central", "username": "${env.MAVEN_REPOSITORY_USER}", "password": "${env.MAVEN_REPOSITORY_TOKEN}" }]'
+        mirrors: '[{ "id": "central", "mirrorOf": "central", "url": "${env.MAVEN_REPOSITORY_URL}" }]'
+        repositories: '[{ "id": "central",  "url": "${env.MAVEN_REPOSITORY_URL}", "snapshots": { "enabled": "true" } }]'
+
+    # Note: GITHUB_TOKEN is already reserved by GitHub Actions.
+    # GITHUB_TOKEN accesses inputs.repository only (the one starting the GitHub Action Workflow).
+    # Therefore, GH_RUNNER_TOKEN is used to access other repositories.
+    # Remember to give appropriate rights to the user hosting the GH_RUNNER_TOKEN.
     - name: Run release workflow
+      env:
       run: |
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
+        export GH_RUNNER_TOKEN="${{ inputs.gh-runner-token }}"
         export JIRA_USER="${{ inputs.jira-user }}"
         export JIRA_TOKEN="${{ inputs.jira-token }}"
+        export MAVEN_REPOSITORY_USERNAME="${{ inputs.maven-repository-user }}"
+        export MAVEN_REPOSITORY_TOKEN="${{ inputs.maven-repository-token }}"
+        export MAVEN_REPOSITORY_URL="${{ inputs.maven-repository-url }}"
         export SLACK_TOKEN="${{ inputs.slack-token }}"
         export TRIGGERING_USER="${{ github.triggering_actor }}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
