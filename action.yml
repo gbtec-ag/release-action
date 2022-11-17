@@ -74,6 +74,5 @@ runs:
         export MAVEN_REPOSITORY_TOKEN="${{ inputs.maven-repository-token }}"
         export MAVEN_REPOSITORY_URL="${{ inputs.maven-repository-url }}"
         export SLACK_TOKEN="${{ inputs.slack-token }}"
-        export TRIGGERING_USER="${{ github.triggering_actor }}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
