@@ -41,6 +41,7 @@ runs:
       with: 
         token: ${{ inputs.gh-runner-token }}
         repository: gbtec-ag/git-repository-runner
+        # FIXME: we want to change that to master later
         ref: refs/heads/feat/DES-2160
         path: git-repository-runner
 
@@ -69,7 +70,7 @@ runs:
         export GH_RUNNER_TOKEN="${{ inputs.gh-runner-token }}"
         export JIRA_USER="${{ inputs.jira-user }}"
         export JIRA_TOKEN="${{ inputs.jira-token }}"
-        export MAVEN_REPOSITORY_USERNAME="${{ inputs.maven-repository-user }}"
+        export MAVEN_REPOSITORY_USER="${{ inputs.maven-repository-user }}"
         export MAVEN_REPOSITORY_TOKEN="${{ inputs.maven-repository-token }}"
         export MAVEN_REPOSITORY_URL="${{ inputs.maven-repository-url }}"
         export SLACK_TOKEN="${{ inputs.slack-token }}"
