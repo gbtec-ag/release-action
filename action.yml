@@ -63,7 +63,6 @@ runs:
     # Therefore, GH_RUNNER_TOKEN is used to access other repositories.
     # Remember to give appropriate rights to the user hosting the GH_RUNNER_TOKEN.
     - name: Run release workflow
-      env:
       run: |
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
