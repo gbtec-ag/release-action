@@ -9,15 +9,18 @@ inputs:
   gh-runner-token:
     description: 'Token to clone GitHub repositories'
     required: true
+  github-token:
+    description: 'Automatic GitHub Workflow token'
+    required: true
   maven-repository-user:
     description: 'User to access maven-repository artifacts'
-    required: true
+    required: false
   maven-repository-token:
     description: 'Token to access maven-repository artifacts'
-    required: true
+    required: false
   maven-repository-url:
     description: 'Url to access maven-repository artifacts'
-    required: true
+    required: false
   jira-user:
     description: 'User to access Jira API'
     required: true
@@ -68,6 +71,7 @@ runs:
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
         export REPO_HELPER_SERVICES="${{ inputs.repository }}"
         export GH_RUNNER_TOKEN="${{ inputs.gh-runner-token }}"
+        export GITHUB_TOKEN="${{ inputs.github-token }}"
         export JIRA_USER="${{ inputs.jira-user }}"
         export JIRA_TOKEN="${{ inputs.jira-token }}"
         export MAVEN_REPOSITORY_USER="${{ inputs.maven-repository-user }}"
