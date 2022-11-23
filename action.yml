@@ -34,10 +34,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Python
-      uses: actions/setup-python@v4
+    - name: Checkout the target repository
+      uses: actions/checkout@v3
       with:
-        python-version: '3.10'
+        token: ${{ inputs.github-token }}
+        repository: gbtec-ag/${{ inputs.repository }}
+        path: ${{ inputs.repository }}
+        fetch-depth: 0
 
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3
@@ -48,19 +51,46 @@ runs:
         ref: refs/heads/feat/DES-2160
         path: git-repository-runner
 
-    - name: Install dependencies
+    - name: Check for Maven project
+      id: check-maven
       run: |
-        cd git-repository-runner
-        pip install -r requirements.txt
+        [[ -f ${{ inputs.repository }}/pom.xml ]] && is_maven=true || is_maven=false
+        echo "::set-output name=is_maven::${is_maven}"
       shell: bash
 
+    - name: Install Java and Maven
+      if: steps.check-maven.outputs.is_maven == 'true'
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+
+    - name: Define Maven Cache
+      if: steps.check-maven.outputs.is_maven == 'true'
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: maven-release
+
     - name: Create Maven settings
+      if: steps.check-maven.outputs.is_maven == 'true'
       uses: whelk-io/maven-settings-xml-action@v21
       with:
         # We need the indirection of the environment vars so that the credentials never get written to settings.xml on harddisk.
         servers: '[{ "id": "central", "username": "${env.MAVEN_REPOSITORY_USER}", "password": "${env.MAVEN_REPOSITORY_TOKEN}" }]'
         mirrors: '[{ "id": "central", "mirrorOf": "central", "url": "${env.MAVEN_REPOSITORY_URL}" }]'
         repositories: '[{ "id": "central",  "url": "${env.MAVEN_REPOSITORY_URL}", "snapshots": { "enabled": "true" } }]'
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Python dependencies
+      run: |
+        cd git-repository-runner
+        pip install -r requirements.txt
+      shell: bash
 
     # Note: GITHUB_TOKEN is already reserved by GitHub Actions.
     # GITHUB_TOKEN accesses inputs.repository only (the one starting the GitHub Action Workflow).
