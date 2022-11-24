@@ -97,16 +97,17 @@ runs:
     # Therefore, GH_RUNNER_TOKEN is used to access other repositories.
     # Remember to give appropriate rights to the user hosting the GH_RUNNER_TOKEN.
     - name: Run release workflow
+      env:
+        REPO_HELPER_SERVICES: "${{ inputs.repository }}"
+        GH_RUNNER_TOKEN: "${{ inputs.gh-runner-token }}"
+        GITHUB_TOKEN: "${{ inputs.github-token }}"
+        JIRA_USER: "${{ inputs.jira-user }}"
+        JIRA_TOKEN: "${{ inputs.jira-token }}"
+        MAVEN_REPOSITORY_USER: "${{ inputs.maven-repository-user }}"
+        MAVEN_REPOSITORY_TOKEN: "${{ inputs.maven-repository-token }}"
+        MAVEN_REPOSITORY_URL: "${{ inputs.maven-repository-url }}"
+        SLACK_TOKEN: "${{ inputs.slack-token }}"
       run: |
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
-        export REPO_HELPER_SERVICES="${{ inputs.repository }}"
-        export GH_RUNNER_TOKEN="${{ inputs.gh-runner-token }}"
-        export GITHUB_TOKEN="${{ inputs.github-token }}"
-        export JIRA_USER="${{ inputs.jira-user }}"
-        export JIRA_TOKEN="${{ inputs.jira-token }}"
-        export MAVEN_REPOSITORY_USER="${{ inputs.maven-repository-user }}"
-        export MAVEN_REPOSITORY_TOKEN="${{ inputs.maven-repository-token }}"
-        export MAVEN_REPOSITORY_URL="${{ inputs.maven-repository-url }}"
-        export SLACK_TOKEN="${{ inputs.slack-token }}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
