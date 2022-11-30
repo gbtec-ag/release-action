@@ -33,6 +33,12 @@ inputs:
   slack-token:
     description: 'Token to access Slack API'
     required: true
+  quay-retry-max:
+    description: 'Maximum number of retries to check for the Quay artifact'
+    required: false
+  quay-retry-wait-in-seconds:
+    description: 'Seconds to wait between retries when checking for Quay artifacts'
+    required: false
 
 runs:
   using: "composite"
@@ -107,6 +113,8 @@ runs:
         JIRA_USER: "${{ inputs.jira-user }}"
         JIRA_TOKEN: "${{ inputs.jira-token }}"
         QUAY_API_TOKEN: "${{ inputs.quay-api-token }}"
+        QUAY_RETRY_MAX: ${{ inputs.quay-retry-max }}
+        QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
         SLACK_TOKEN: "${{ inputs.slack-token }}"
       run: |
         export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
