@@ -112,6 +112,7 @@ runs:
         GITHUB_TOKEN: "${{ inputs.github-token }}"
         JIRA_USER: "${{ inputs.jira-user }}"
         JIRA_TOKEN: "${{ inputs.jira-token }}"
+        RUN_AS: "GitHub Action"
         QUAY_API_TOKEN: "${{ inputs.quay-api-token }}"
         QUAY_RETRY_MAX: ${{ inputs.quay-retry-max }}
         QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
