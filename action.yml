@@ -106,9 +106,6 @@ runs:
         GITHUB_TOKEN: "${{ inputs.github-token }}"
         JIRA_USER: "${{ inputs.jira-user }}"
         JIRA_TOKEN: "${{ inputs.jira-token }}"
-        MAVEN_REPOSITORY_USER: "${{ inputs.maven-repository-user }}"
-        MAVEN_REPOSITORY_TOKEN: "${{ inputs.maven-repository-token }}"
-        MAVEN_REPOSITORY_URL: "${{ inputs.maven-repository-url }}"
         QUAY_API_TOKEN: "${{ inputs.quay-api-token }}"
         SLACK_TOKEN: "${{ inputs.slack-token }}"
       run: |
