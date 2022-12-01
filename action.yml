@@ -107,7 +107,7 @@ runs:
     # Remember to give appropriate rights to the user hosting the GH_RUNNER_TOKEN.
     - name: Run release workflow
       env:
-        REPO_HELPER_SERVICES: "${{ inputs.repository }}"
+        GH_RUNNER_SERVICES: "${{ inputs.repository }}"
         GH_RUNNER_TOKEN: "${{ inputs.gh-runner-token }}"
         GITHUB_TOKEN: "${{ inputs.github-token }}"
         JIRA_USER: "${{ inputs.jira-user }}"
@@ -117,7 +117,8 @@ runs:
         QUAY_RETRY_MAX: ${{ inputs.quay-retry-max }}
         QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
         SLACK_TOKEN: "${{ inputs.slack-token }}"
+      # variable GITHUB_WORKSPACE is not accessible in env section above, so we need to export it here
       run: |
-        export REPO_HELPER_BASEDIR="${GITHUB_WORKSPACE}"
+        export GH_RUNNER_BASEDIR="${GITHUB_WORKSPACE}"
         ./git-repository-runner/runner.py CreateRelease "${{ inputs.source-branch }}"
       shell: bash
