@@ -53,7 +53,7 @@ runs:
 
     - name: Checkout git-repository-runner
       uses: actions/checkout@v3
-      with: 
+      with:
         token: ${{ inputs.gh-runner-token }}
         repository: gbtec-ag/git-repository-runner
         # FIXME: we want to change that to master later
@@ -112,10 +112,10 @@ runs:
         GITHUB_TOKEN: "${{ inputs.github-token }}"
         JIRA_USER: "${{ inputs.jira-user }}"
         JIRA_TOKEN: "${{ inputs.jira-token }}"
-        RUN_AS: "GitHub Action"
         QUAY_API_TOKEN: "${{ inputs.quay-api-token }}"
         QUAY_RETRY_MAX: ${{ inputs.quay-retry-max }}
         QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
+        RUN_AS: "GitHub Action"
         SLACK_TOKEN: "${{ inputs.slack-token }}"
       # variable GITHUB_WORKSPACE is not accessible in env section above, so we need to export it here
       run: |
