@@ -117,6 +117,9 @@ runs:
         QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
         RUN_AS: "GitHub Action"
         SLACK_TOKEN: "${{ inputs.slack-token }}"
+        MAVEN_REPOSITORY_USER: "${{ inputs.maven-repository-user }}"
+        MAVEN_REPOSITORY_TOKEN: "${{ inputs.maven-repository-token }}"
+        MAVEN_REPOSITORY_URL: "${{ inputs.maven-repository-url }}"
       # variable GITHUB_WORKSPACE is not accessible in env section above, so we need to export it here
       run: |
         export GH_RUNNER_BASEDIR="${GITHUB_WORKSPACE}"
