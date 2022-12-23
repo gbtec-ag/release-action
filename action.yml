@@ -56,8 +56,7 @@ runs:
       with:
         token: ${{ inputs.gh-runner-token }}
         repository: gbtec-ag/git-repository-runner
-        # FIXME: we want to change that to master later
-        ref: refs/heads/feat/DES-2160
+        ref: refs/heads/master
         path: git-repository-runner
 
     - name: Check for Maven project
