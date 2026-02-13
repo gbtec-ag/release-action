@@ -86,6 +86,7 @@ runs:
       with:
         # We need the indirection of the environment vars so that the credentials never get written to settings.xml on harddisk.
         servers: '[{ "id": "central", "username": "${env.MAVEN_REPOSITORY_USER}", "password": "${env.MAVEN_REPOSITORY_TOKEN}" }]'
+        # Note: We need to provide a mirror for maven-restlet, as this repository is no longer active and some of our projects try to fetch libraries from it.
         mirrors: '[{ "id": "central", "mirrorOf": "central", "url": "${env.MAVEN_REPOSITORY_URL}" }, { "id": "central-for-bad-restlet", "mirrorOf": "maven-restlet", "url": "${env.MAVEN_REPOSITORY_URL}" }]'
         repositories: '[{ "id": "central",  "url": "${env.MAVEN_REPOSITORY_URL}", "snapshots": { "enabled": "true" } }]'
 
