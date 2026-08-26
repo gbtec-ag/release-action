@@ -91,7 +91,7 @@ runs:
         repositories: '[{ "id": "central",  "url": "${env.MAVEN_REPOSITORY_URL}", "snapshots": { "enabled": "true" } }]'
 
     - name: Install Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v7
       with:
         python-version: '3.10'
 
