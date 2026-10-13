@@ -68,7 +68,7 @@ runs:
       uses: actions/setup-java@v6
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: '11'
 
     - name: Define Maven Cache
       if: steps.check-maven.outputs.is_maven == 'true'
