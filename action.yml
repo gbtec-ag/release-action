@@ -27,17 +27,14 @@ inputs:
   jira-token:
     description: 'Token to access Jira API'
     required: true
-  quay-api-token:
-    description: 'Application token to access the Quay API'
-    required: true
   slack-token:
     description: 'Token to access Slack API'
     required: true
-  quay-retry-max:
-    description: 'Maximum number of retries to check for the Quay artifact'
+  retry-max:
+    description: 'Maximum number of retries to check for the GitHub build to be completed'
     required: false
-  quay-retry-wait-in-seconds:
-    description: 'Seconds to wait between retries when checking for Quay artifacts'
+  retry-wait-in-seconds:
+    description: 'Seconds to wait between retries when checking for the GitHub build to be completed'
     required: false
 
 runs:
