@@ -56,7 +56,7 @@ runs:
       with:
         token: ${{ inputs.gh-runner-token }}
         repository: gbtec-ag/git-repository-runner
-        ref: refs/heads/feat/DES-7352
+        ref: refs/heads/master
         path: git-repository-runner
 
     - name: Check for Maven project
