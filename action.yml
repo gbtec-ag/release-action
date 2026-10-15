@@ -27,17 +27,14 @@ inputs:
   jira-token:
     description: 'Token to access Jira API'
     required: true
-  quay-api-token:
-    description: 'Application token to access the Quay API'
-    required: true
   slack-token:
     description: 'Token to access Slack API'
     required: true
-  quay-retry-max:
-    description: 'Maximum number of retries to check for the Quay artifact'
+  build-retry-max:
+    description: 'Maximum number of retries to check for the GitHub build to be completed'
     required: false
-  quay-retry-wait-in-seconds:
-    description: 'Seconds to wait between retries when checking for Quay artifacts'
+  build-retry-wait-in-seconds:
+    description: 'Seconds to wait between retries when checking for the GitHub build to be completed'
     required: false
 
 runs:
@@ -115,9 +112,8 @@ runs:
         MAVEN_REPOSITORY_USER: "${{ inputs.maven-repository-user }}"
         MAVEN_REPOSITORY_TOKEN: "${{ inputs.maven-repository-token }}"
         MAVEN_REPOSITORY_URL: "${{ inputs.maven-repository-url }}"
-        QUAY_API_TOKEN: "${{ inputs.quay-api-token }}"
-        QUAY_RETRY_MAX: ${{ inputs.quay-retry-max }}
-        QUAY_RETRY_WAIT_IN_SECONDS: ${{ inputs.quay-retry-wait-in-seconds }}
+        BUILD_RETRY_MAX: ${{ inputs.build-retry-max }}
+        BUILD_RETRY_WAIT_IN_SECONDS: ${{ inputs.build-retry-wait-in-seconds }}
         RUN_AS: "GitHub Action"
         SLACK_TOKEN: "${{ inputs.slack-token }}"
       # variable GITHUB_WORKSPACE is not accessible in env section above, so we need to export it here
